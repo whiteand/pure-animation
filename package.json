@@ -1,5 +1,5 @@
 {
-  "name": "timemachine",
+  "name": "pure-animation",
   "version": "0.0.1",
   "description": "Functional animation library",
   "main": "dist/index.js",
