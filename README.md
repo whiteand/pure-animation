@@ -123,3 +123,68 @@ const slowMoOpacityAnimation = mapTime(
   opacityAnimation
 );
 ```
+
+### mergeMap
+
+```javascript
+function mergeMap<A, B, ...Rest>(
+  merge: (a: A, b: B, ...restAnimatedValues) => R
+  aAnimation: Animation<A>,
+  bAnimation: Animation<B>,
+  ...restAnimations,
+): Animation<R>
+```
+
+You can create animation by combining of values of other animations
+
+Example:
+
+```javascript
+const temperatureAnimation = (year) => {
+  switch (year) {
+    case 2021:
+      return 60;
+    case 2025:
+      return 40;
+    case 2030:
+      return 30;
+    default:
+      return 25;
+  }
+};
+const populationAnimation = (year) => {
+  return 7_500_000_000 + year * 100_000_000;
+};
+
+const temperatureAndPopulationAnimation = mergeMap(
+  (temperature, population) => ({ temperature, population }),
+  temperatureAnimation,
+  populationAnimation
+);
+
+temperatureAndPopulationAnimation(2021); // { temperature: 60, population: 7500000000}
+temperatureAndPopulationAnimation(2022); // { temperature: 25, population: 7600000000}
+```
+
+### switchMap
+
+```javascript
+switchMap<T, R>(
+  createAnimation: (value: T) => Animation<R>,
+  animation: Animation<T>
+): Animation<R>
+```
+
+You can use animated value to create new animation and apply it. See example below:
+
+```javascript
+const scrollAnimation = () => window.scrollY;
+const scrolledBasedPosition = switchMap((scroll) => {
+  if (scroll < 100) return 1000;
+  if (scroll > 200) return -1000;
+  return (time) => time / 100;
+}, scrollAnimation);
+scrolledBasedPosition(10); // will return 1000 if scroll < 100
+scrolledBasedPosition(250); // will return -1000 if scroll > 200
+scrolledBasedPosition(150); // will return 1.5
+```
