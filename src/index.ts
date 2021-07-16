@@ -8,4 +8,5 @@ export * from "./mapTime";
 export * from "./mergeMap";
 export * from "./switchMap";
 export * from "./types";
+export * from "./linear";
 export * from "./predefined";
