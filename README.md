@@ -2,6 +2,10 @@
 
 Animation Library which understands animation as a function of time. It has many helpers to work with such animations.
 
+## Example of usage
+
+[Codesandbox with block animation that can be paused and reversed](https://codesandbox.io/s/green-monad-6clpt?file=/src/App.js)
+
 ## Glossary
 
 **Animation** - it's a function from time to some value.
