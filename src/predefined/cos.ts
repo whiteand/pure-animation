@@ -1,3 +1,5 @@
+import { bound } from "../bound";
+
 export function cos(
   minTime: number,
   maxTime: number,
@@ -5,7 +7,11 @@ export function cos(
   maxValue: number
 ): (value: number) => number {
   const amplitude = maxValue - minValue;
-  const middleValue = amplitude / 2;
-  const phase = Math.PI / (maxTime - minTime);
-  return (time) => Math.cos(phase * time) * amplitude + middleValue;
+  const timeRange = maxTime - minTime;
+  return (time) => {
+    const boundedTime = bound(minTime, maxTime, time);
+    const ratio = (boundedTime - minTime) / timeRange;
+    const cosValue = (1 - Math.cos(ratio * Math.PI)) / 2;
+    return cosValue * amplitude + minValue;
+  };
 }
