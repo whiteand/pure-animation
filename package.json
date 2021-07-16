@@ -1,6 +1,6 @@
 {
   "name": "pure-animation",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Functional animation library",
   "main": "dist/index.js",
   "scripts": {
