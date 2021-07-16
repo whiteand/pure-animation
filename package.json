@@ -1,0 +1,22 @@
+{
+  "name": "timemachine",
+  "version": "0.0.1",
+  "description": "Functional animation library",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist/**"
+  ],
+  "keywords": [
+    "animation",
+    "time",
+    "functional"
+  ],
+  "author": "whiteand",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
+}
