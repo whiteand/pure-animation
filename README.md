@@ -1,4 +1,4 @@
-# timemachine
+# pure-animation
 
 Animation Library which understands animation as a function of time. It has many helpers to work with such animations.
 

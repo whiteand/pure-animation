@@ -10,10 +10,16 @@
   "files": [
     "dist/**"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/whiteand/pure-animation"
+  },
   "keywords": [
     "animation",
-    "time",
-    "functional"
+    "time-based",
+    "functional",
+    "stateless",
+    "pure"
   ],
   "author": "whiteand",
   "license": "ISC",
