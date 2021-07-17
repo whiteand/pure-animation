@@ -88,15 +88,119 @@ const notificationAnimation = chain(
 notificationAnimation(-10); // 0, since -10 < 0 chained function will return opacityFrom0To1(0).
 notificationAnimation(5); // 0.05, since opacityFrom0To1(5) => 0.05
 notificationAnimation(120); // 1, since () => 1 always returns 1
-notificationAnimation(210); // 0.9, since opacityFrom1To0(210 - 200) => 0.9
+notificationAnimation(210); // 0.9, ince opacityFrom1To0(210 - 200) => 0.9
+```
+
+**RESTRICTION** values passed to `chain` function should be in order of time increasing. Next function will **NOT** work correctly:
+
+```javascript
+const notificationAnimation = chain(
+  [200, opacityFrom1To0],
+  [0, opacityFrom0To1],
+  [100, () => 1]
+);
+```
+
+### cos
+
+```javascript
+function cos(startTime: number, endTime: number, minValue: number, maxValue: number): Animation<number>;
+```
+
+This function returns animation simmilar to `ease-in-out` animation that changes from `minValue` to `maxValue`, when time changes from `startTime` to `maxTime`.
+
+Example:
+
+```javascript
+const opacityAnimation = cos(
+  0, // animation start from time 0
+  60, // animation finishes when time is 60
+  0, // animation will equal to 0 when time <= startTime
+  1 // animation will equal to 1 when time >= endTime.
+); // animation will return values from 0 to 1 when startTime < time < endTime
+
+opacityAnimation(-1); // 0
+opacityAnimation(0); // 0
+opacityAnimation(1); // 0.000685
+opacityAnimation(30); // 0.5
+opacityAnimation(55); // 0.9829
+opacityAnimation(60); // 1
+opacityAnimation(61); // 1
+```
+
+### fromArray
+
+```javascript
+function fromArray<T>(array: T[]): Animation<T>
+```
+
+You can use this function to create animation of array items. Index of array is treated as a time.
+
+```javascript
+const daysAnimation = fromArray([
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+]);
+
+daysAnimation(-1); // 'monday'
+daysAnimation(0); // 'monday'
+daysAnimation(0.5); // 'monday'
+daysAnimation(1); // 'tuesday'
+daysAnimation(6); // 'sunday'
+daysAnimation(6.5); // 'sunday'
+daysAnimation(25); // 'sunday'
+```
+
+### identity
+
+```javascript
+identity: Animation<number>
+```
+
+This is animation that returns time.
+
+Same as:
+
+```javascript
+const identity = (time) => time;
+```
+
+You can use it as parameter to create other functions that will be more useful.
+
+```javascript
+const boundedTimeAnimation = bounded(0, 20, identity);
+
+boundedTimeAnimation(-10); // 0
+boundedTimeAnimation(0); // 0
+boundedTimeAnimation(5); // 5
+boundedTimeAnimation(20); // 20
+boundedTimeAnimation(25); // 25
+```
+
+### linear
+
+```javascript
+function linear(x0: number, x1: number, y0: number, y1: number, x: number): number;
+```
+
+Returns `y` coordinate of the point on the line that passes `(x0, y0)` and `(x1, y1)` and has x coordinate equal to `x`.
+
+```javascript
+const celsiusToFahrenheit = (celsius) => linear(0, 10, 32, 50, ceilsius);
+celsiusToFahrenheit(0);    // 32
+celsiusToFahrenheit(10);   // 50
+celsiusToFahrenheit(36.6); // 97.88
 ```
 
 ### map
 
-```
-
+```javascript
 map<T, R>(transform: (value: T) => R, animation: Animation<T>): Animation<R>
-
 ```
 
 Creates animation which will return `transform(animation(time))` for each `time`.
@@ -184,8 +288,8 @@ You can use animated value to create new animation and apply it. See example bel
 ```javascript
 const scrollAnimation = () => window.scrollY;
 const scrolledBasedPosition = switchMap((scroll) => {
-  if (scroll < 100) return 1000;
-  if (scroll > 200) return -1000;
+  if (scroll < 100) return () => 1000;
+  if (scroll > 200) return () => -1000;
   return (time) => time / 100;
 }, scrollAnimation);
 scrolledBasedPosition(10); // will return 1000 if scroll < 100
