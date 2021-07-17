@@ -6,6 +6,23 @@ Animation Library which understands animation as a function of time. It has many
 
 [Codesandbox with block animation that can be paused and reversed](https://codesandbox.io/s/green-monad-6clpt?file=/src/App.js)
 
+## Contents
+
+- [Example of usage](#example-of-usage)
+- [Glossary](#glossary)
+- [API](#api)
+  - [always](#always)
+  - [bounded](#bounded)
+  - [chain](#chain)
+  - [cos](#cos)
+  - [fromArray](#fromarray)
+  - [identity](#identity)
+  - [linear](#linear)
+  - [map](#map)
+  - [mapTime](#maptime)
+  - [mergeMap](#mergemap)
+  - [switchMap](#switchmap)
+
 ## Glossary
 
 **Animation** - it's a function from time to some value.
@@ -192,8 +209,8 @@ Returns `y` coordinate of the point on the line that passes `(x0, y0)` and `(x1,
 
 ```javascript
 const celsiusToFahrenheit = (celsius) => linear(0, 10, 32, 50, ceilsius);
-celsiusToFahrenheit(0);    // 32
-celsiusToFahrenheit(10);   // 50
+celsiusToFahrenheit(0); // 32
+celsiusToFahrenheit(10); // 50
 celsiusToFahrenheit(36.6); // 97.88
 ```
 
